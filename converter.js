@@ -10,7 +10,7 @@ function convertToRoman(num){
         6: 'VI',
         7: 'VII',
         8: 'VIII',
-        9: 'IX',
+        9: 'IX'
     };
 
     const tens = {
@@ -46,11 +46,19 @@ function convertToRoman(num){
         6: 'DC',
         7: 'DCC',
         8: 'DCCC',
-        9: 'CM',
+        9: 'CM'
     };
 
     const thousands = {
-        1000: 'M'
+        1: 'M',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        6: '',
+        7: '',
+        8: '',
+        9: ''
     };
 
     let romanNum = '';
@@ -92,8 +100,38 @@ function convertToRoman(num){
         }
 
     }
+
+    else if(num > 999 && num < 10000){
+        //convert num into a string, then
+       //split string into individual elements and store in array
+       let numArr = num.toString().split('');
+
+       console.log(numArr);
+
+       for(let i = 0; i < numArr.length; i++){
+           if(numArr[1] == '0' && numArr[2] == '0' && numArr[3] == '0'){
+               romanNum = thousands[numArr[0]];
+           }
+           else if(numArr[1] == '0' && numArr[2] != '0' && numArr[3] != '0'){
+                    if(numArr[2] == '1'){
+                        romanNum = thousands[numArr[0]] + tens[numArr[2]] + ones[numArr[3]];
+                    }
+                    else romanNum = thousands[numArr[0]] + prefixes[numArr[2]] + ones[numArr[3]];
+           }
+           else if(numArr[1] != '0' && numArr[2] == '0' && numArr[3] == '0'){
+                romanNum = thousands[numArr[0]] + hundreds[numArr[1]];
+           }
+           else if(numArr[1] == '0' && numArr[2] == '0' && numArr[3] != '0'){
+            romanNum = thousands[numArr[0]] + ones[numArr[3]];
+       }
+         
+           else romanNum = (thousands[numArr[0]] + hundreds[numArr[1]] + prefixes[numArr[2]] + ones[numArr[3]]);
+       }
+
+   }
+
     //return romanNum;
     console.log(romanNum);
 }
 
-convertToRoman(550);
+convertToRoman(1104);
