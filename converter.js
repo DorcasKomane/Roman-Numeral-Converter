@@ -1,7 +1,7 @@
 function convertToRoman(num){
 
     const ones = {
-        0: '0',
+        0: '',
         1: 'I',
         2: 'II',
         3: 'III',
@@ -26,22 +26,6 @@ function convertToRoman(num){
         19: 'XIX'
     };
 
-    const hundreds = {
-        100: 'C',
-        200: 'CC',
-        300: 'CCC',
-        400: 'CD',
-        500: 'D',
-        600: 'DC',
-        700: 'DCC',
-        800: 'DCCC',
-        900: 'CM',
-    };
-
-    const thousands = {
-        1000: 'M'
-    };
-
     const prefixes = {
         2: 'XX',
         3: 'XXX',
@@ -53,14 +37,63 @@ function convertToRoman(num){
         9: 'XC'
     };
 
-    let romanNum = 'ZERO';
+    const hundreds = {
+        1: 'C',
+        2: 'CC',
+        3: 'CCC',
+        4: 'CD',
+        5: 'D',
+        6: 'DC',
+        7: 'DCC',
+        8: 'DCCC',
+        9: 'CM',
+    };
+
+    const thousands = {
+        1000: 'M'
+    };
+
+    let romanNum = '';
 
     if(num in ones){
         romanNum = ones[num];
     }
+    else if(num in tens){
+        romanNum = tens[num];
+    }
+    else if(num > 19 && num < 100){
+        //convert num into a string, then
+        //split string into individual elements and store in array
+        let numArr = num.toString().split('');
 
+        console.log(numArr);
+
+        for(let i = 0; i < numArr.length; i++){
+            if(numArr[1] == '0'){
+                romanNum = prefixes[numArr[0]];
+            }
+            else romanNum = (prefixes[numArr[0]] + ones[numArr[1]]);
+        }
+
+    }
+    else if(num > 99 && num < 1000){
+         //convert num into a string, then
+        //split string into individual elements and store in array
+        let numArr = num.toString().split('');
+
+        console.log(numArr);
+
+        for(let i = 0; i < numArr.length; i++){
+            if(numArr[1] == '0' && numArr[2] == '0'){
+                romanNum = hundreds[numArr[0]];
+            }
+          
+            else romanNum = (hundreds[numArr[0]] + prefixes[numArr[1]] + ones[numArr[2]]);
+        }
+
+    }
     //return romanNum;
     console.log(romanNum);
 }
 
-convertToRoman(1);
+convertToRoman(550);
