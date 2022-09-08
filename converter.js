@@ -14,7 +14,7 @@ function convertToRoman(num){
     };
 
     const tens = {
-        10: 'X',
+        1: 'X',
         11: 'XI',
         12: 'XII',
         13: 'XIII',
@@ -51,14 +51,8 @@ function convertToRoman(num){
 
     const thousands = {
         1: 'M',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        6: '',
-        7: '',
-        8: '',
-        9: ''
+        2: 'MM',
+        3: 'MMM'
     };
 
     let romanNum = '';
@@ -95,14 +89,17 @@ function convertToRoman(num){
             if(numArr[1] == '0' && numArr[2] == '0'){
                 romanNum = hundreds[numArr[0]];
             }
+            else if(numArr[1] == '0' && numArr[2] != '0'){
+                romanNum = hundreds[numArr[0]] + ones[numArr[2]];
+            }
           
             else romanNum = (hundreds[numArr[0]] + prefixes[numArr[1]] + ones[numArr[2]]);
         }
 
     }
 
-    else if(num > 999 && num < 10000){
-        //convert num into a string, then
+    else if(num > 999 && num < 4000){
+       //convert num into a string, then
        //split string into individual elements and store in array
        let numArr = num.toString().split('');
 
@@ -116,15 +113,21 @@ function convertToRoman(num){
                     if(numArr[2] == '1'){
                         romanNum = thousands[numArr[0]] + tens[numArr[2]] + ones[numArr[3]];
                     }
-                    else romanNum = thousands[numArr[0]] + prefixes[numArr[2]] + ones[numArr[3]];
+                else romanNum = thousands[numArr[0]] + prefixes[numArr[2]] + ones[numArr[3]];
            }
            else if(numArr[1] != '0' && numArr[2] == '0' && numArr[3] == '0'){
                 romanNum = thousands[numArr[0]] + hundreds[numArr[1]];
            }
            else if(numArr[1] == '0' && numArr[2] == '0' && numArr[3] != '0'){
             romanNum = thousands[numArr[0]] + ones[numArr[3]];
-       }
-         
+           }
+           else if(numArr[1] != '0' && numArr[2] == '0' && numArr[3] != '0'){
+                if(numArr[2] == '1'){
+                    romanNum = thousands[numArr[0]] + tens[numArr[2]] + ones[numArr[3]];
+                }
+                else romanNum = thousands[numArr[0]] + hundreds[numArr[1]] + ones[numArr[3]];
+           }
+        
            else romanNum = (thousands[numArr[0]] + hundreds[numArr[1]] + prefixes[numArr[2]] + ones[numArr[3]]);
        }
 
@@ -134,4 +137,4 @@ function convertToRoman(num){
     console.log(romanNum);
 }
 
-convertToRoman(1104);
+convertToRoman(3999);
